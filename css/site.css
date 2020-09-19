@@ -1,0 +1,93 @@
+html, body {
+    margin: 0px;
+    text-align: center;
+    padding: 0 !important;
+    width: 100%;
+    position: relative;
+    height: 100%;
+    min-height: 100%;
+    margin: 0 !important;
+    background-color: black;
+}
+
+canvas {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+.swal2-popup, .swal2-styled {
+    font-family: 'Press Start 2P';
+}
+.touch-controls {
+    position: absolute;
+    display: flex;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.touch-controls div {
+    width: 100%;
+    flex: 1 1 auto;
+}
+#touch-control-down {
+    margin-top: 1rem;
+}
+#touch-control-up {
+    margin-bottom: 1rem;
+}
+
+.swal2-radio {
+    flex-wrap: wrap;
+}
+
+.swal2-radio label {
+    display: inline-flex;
+    align-items: center;
+}
+
+.swal2-radio label > * {
+    flex: none;
+}
+
+#swal2-content {
+    line-height: 1.5em;
+}
+
+.swal2-validation-message::before {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 400px) {
+    .swal2-title {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 285px) {
+    .swal2-title {
+        font-size: 1.0em;
+    }
+    .swal2-input {
+        font-size: 0.95em;
+        height: 1.8em;
+    }
+}
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+       -moz-appearance: textfield;
+            appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+}
