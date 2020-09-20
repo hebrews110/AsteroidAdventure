@@ -325,18 +325,18 @@ function preload() {
  */
 function create() {
     var touchControlUp = document.querySelector("canvas");
-    touchControlUp.addEventListener("touchstart", function(e) {
+    touchControlUp.addEventListener("pointerdown", function(e) {
         if(gameOver || !gameStarted)
             return;
-        if(e.touches[0].clientY <= (touchControlUp.clientHeight / 2))
+        if(e.clientY <= (touchControlUp.clientHeight / 2))
             isTopDivPressed = true;
         else
             isBottomDivPressed = true;
     });
-    touchControlUp.addEventListener("touchend", function(e) {
+    touchControlUp.addEventListener("pointerup", function(e) {
         if(gameOver || !gameStarted)
             return;
-        if(e.changedTouches[0].clientY <= (touchControlUp.clientHeight / 2))
+        if(e.clientY <= (touchControlUp.clientHeight / 2))
             isTopDivPressed = false;
         else
             isBottomDivPressed = false;
@@ -395,6 +395,8 @@ function dialogAndWait(scene, fn) {
     isTopDivPressed = false
     scene.sound.setMute(true)
     inDialog = true;
+    isTopDivPressed = false;
+    isBottomDivPressed = false;
     fn(function() {
         inDialog = false;
         scene.sound.setMute(isMuted)
