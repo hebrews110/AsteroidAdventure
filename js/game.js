@@ -253,7 +253,7 @@ let scoreboardGroup
  */
 let score
 
-var GAME_SPEED = -200;
+var GAME_SPEED = -160;
 
 var backgroundDivOffset = 0;
 var body;
@@ -442,7 +442,7 @@ function update() {
     })
 
     nextPipes++
-    if (nextPipes === 25) {
+    if (nextPipes === Math.round(50*(200/Math.abs(GAME_SPEED)))) {
         
         makePipes(game.scene.scenes[0])
         nextPipes = 0
@@ -593,13 +593,16 @@ function makePipes(scene) {
 
     updateScore(null, null);
 
-    const numPipes = getRandomIntInclusive(2, 4);
+    const numPipes = getRandomIntInclusive(2, 10);
     const pipesAdded = [];
     for(var i = 0; i < numPipes; i++) {
-        let pipeTopY;
+        let numTries = 0;
+        let pipeTopY = undefined;
         do {
             pipeTopY = Phaser.Math.Between(-200, 200)
-        } while(pipesAdded.some(function(num) { return Math.abs(pipeTopY-num) <= 20 }));
+        } while((numTries++ <= 3) && pipesAdded.some(function(num) { return Math.abs(pipeTopY-num) <= 20 }));
+        if(typeof pipeTopY == 'undefined')
+            continue;
         pipesAdded.push(pipeTopY);
 
     
