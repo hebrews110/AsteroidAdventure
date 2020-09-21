@@ -469,7 +469,7 @@ function setGameOver() {
  *  @param {object} player - Game object that collided, in this case the bird. 
  */
 function hitBird(player, target) {
-    var currentCorrectAnswer = getRandomIntInclusive(1, maxResultSize);
+    var currentCorrectAnswer = getRandomIntInclusive((operation == "add" && maxResultSize == 10) ? 2 : 1, maxResultSize);
     var firstFactor, secondFactor, symbol;
     
     if(operation != null)
@@ -477,7 +477,7 @@ function hitBird(player, target) {
     
     if(operation == "add") {
         symbol = "&plus;";
-        firstFactor = getRandomIntInclusive(1, currentCorrectAnswer);
+        firstFactor = getRandomIntInclusive(1, currentCorrectAnswer - (maxResultSize == 10 ? 1 : 0));
         secondFactor = currentCorrectAnswer - firstFactor;
     } else if(operation == "subtract") {
         symbol = "&minus;";
@@ -749,6 +749,14 @@ function prepareGame(scene) {
  * @param {object} scene - Game scene.
  */
 function startGame(scene) {
+    function reqListener () {
+        Math.seedrandom(parseInt(this.responseText));
+    }
+    
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", reqListener);
+    oReq.open("GET", "https://www.random.org/strings/?num=1&len=10&digits=on&unique=on&format=plain&rnd=new");
+    oReq.send();
     gameStarted = true
     messageInitial.visible = false
 
