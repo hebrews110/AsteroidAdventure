@@ -154,6 +154,7 @@ window.addEventListener("load", function() {
             }
         }).then(function(result) {
             operation = result.value;
+            window.generateMathQuestions(operation, maxResultSize);
             game = new Phaser.Game(configurations);
         });
     });
@@ -469,33 +470,15 @@ function setGameOver() {
  *  @param {object} player - Game object that collided, in this case the bird. 
  */
 function hitBird(player, target) {
-    var currentCorrectAnswer = getRandomIntInclusive((operation == "add" && maxResultSize == 10) ? 2 : 1, maxResultSize);
+    /* MATH CORE BEGIN */
     var firstFactor, secondFactor, symbol;
+    var retrievedQuestion = window.getNextMathQuestion();
+    firstFactor = retrievedQuestion.operands[0];
+    secondFactor = retrievedQuestion.operands[1];
+    symbol = window.mathSymbol;
+    var currentCorrectAnswer = retrievedQuestion.currentCorrectAnswer;
     
-    if(operation != null)
-        operation = operation.trim();
-    
-    if(operation == "add") {
-        symbol = "&plus;";
-        firstFactor = getRandomIntInclusive(1, currentCorrectAnswer - (maxResultSize == 10 ? 1 : 0));
-        secondFactor = currentCorrectAnswer - firstFactor;
-    } else if(operation == "subtract") {
-        symbol = "&minus;";
-        currentCorrectAnswer = getRandomIntInclusive(1, maxResultSize);
-        secondFactor = getRandomIntInclusive(1, maxResultSize);
-        firstFactor = currentCorrectAnswer + secondFactor;
-    } else if(operation == "multiply") {
-        symbol = "&times;";
-        firstFactor = getRandomIntInclusive(1, maxResultSize);
-        secondFactor = getRandomIntInclusive(1, maxResultSize);
-        currentCorrectAnswer = firstFactor * secondFactor;
-    } else if(operation == "divide") {
-        var divisor = getRandomIntInclusive(2, 6);
-        firstFactor = currentCorrectAnswer * divisor;
-        secondFactor = divisor;
-        symbol = "&divide;";
-    } else
-        window.alert("Unknown ?operation");
+    /* MATH CORE END */
     player.x = 60
     dialogAndWait(game.scene.scenes[0], function(res) {
         Swal.fire({
